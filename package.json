@@ -1,0 +1,36 @@
+{
+  "name": "node-channelio",
+  "version": "1.0.0",
+  "description": "Node.js module for using the Channel API",
+  "author": {
+    "name": "egg",
+    "email": "i@egg.pe.kr"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "standard && grunt"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/egg-/node-channelio.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/egg-/node-channelio/issues"
+  },
+  "homepage": "https://github.com/egg-/node-channelio#readme",
+  "keywords": [
+    "channelio"
+  ],
+  "dependencies": {
+    "axios": "^0.21.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.3.0",
+    "grunt-contrib-watch": "^1.1.0",
+    "grunt-mocha-test": "^0.13.3",
+    "matchdep": "^2.0.0",
+    "mocha": "^8.2.1",
+    "standard": "^16.0.2"
+  }
+}

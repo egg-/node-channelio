@@ -1,7 +1,7 @@
 # node-channelio
 
 [![version](https://img.shields.io/npm/v/node-channelio.svg)](https://www.npmjs.com/package/node-channelio) [![download](https://img.shields.io/npm/dm/node-channelio.svg)](https://www.npmjs.com/package/node-channelio)
-[![status status](https://travis-ci.org/egg-/node-channelio.svg?branch=master)](https://travis-ci.org/egg-/node-channelio)
+[![status status](https://travis-ci.com/egg-/node-channelio.svg?branch=master)](https://travis-ci.com/egg-/node-channelio)
 [![Standard - JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 Node.js module for using the Channel API (https://developers.channel.io/docs/what-is-open-api)

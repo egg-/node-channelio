@@ -24,6 +24,10 @@ client.users.get('user_id', (err, data) => {
   const userId = data.user.id
   // ...
 }
+
+client.users.update('user_id', { profile: profile } (err, data) => {
+  // ...
+}
 ```
 
 ### Events

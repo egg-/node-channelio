@@ -28,6 +28,10 @@ client.users.get('user_id', (err, data) => {
 client.users.update('user_id', { profile: profile } (err, data) => {
   // ...
 }
+
+client.users.delete('user_id', (err) => {
+  // ...
+})
 ```
 
 ### Events

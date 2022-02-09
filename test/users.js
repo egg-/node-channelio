@@ -9,36 +9,35 @@ const config = require('../config.json')
 
 const client = new ChannelIO(config.accessKey, config.acesssSecret)
 
-describe('users api - get', () => {
-  it('same user id', (done) => {
-    client.users.get(config.userId, (err, data) => {
-      assert.strictEqual(err, null)
-      assert.strictEqual(data.user.id, config.userId)
+const user = {
+  id: null
+}
 
-      done()
-    })
-  })
-})
-
-describe('users api - update', () => {
-  it('should save without error', (done) => {
+describe('users api - upsert', () => {
+  it('should save without error', done => {
     const profile = {
-      testDate: Math.floor((new Date()).getTime() / 1000)
+      testDate: Math.floor(new Date().getTime() / 1000)
     }
-    client.users.update(config.userId, { profile: profile }, (err, data) => {
-      assert.strictEqual(err, null)
-      assert.strictEqual(data.user.profile.testDate, profile.testDate)
+    client.users.update(
+      `@${config.memberId}`,
+      { profile: profile },
+      (err, data) => {
+        assert.strictEqual(err, null)
+        assert.strictEqual(data.user.profile.testDate, profile.testDate)
 
-      done()
-    })
+        user.id = data.user.id
+
+        done()
+      }
+    )
   })
 })
 
-describe('events api - get', () => {
-  it('same user id', (done) => {
-    client.users.events.get(config.userId, { limit: 10 }, (err, data) => {
+describe('users api - get', () => {
+  it('same user id', done => {
+    client.users.get(user.id, (err, data) => {
       assert.strictEqual(err, null)
-      assert.strictEqual(data.events[0].userId, config.userId)
+      assert.strictEqual(data.user.memberId, config.memberId)
 
       done()
     })
@@ -46,10 +45,26 @@ describe('events api - get', () => {
 })
 
 describe('events api - create', () => {
-  it('same event name', (done) => {
-    client.users.events.create(config.userId, 'ApiTest', { version: '1.0.0' }, (err, data) => {
+  it('same event name', done => {
+    client.users.events.create(
+      user.id,
+      'ApiTest',
+      { version: '1.0.0' },
+      (err, data) => {
+        assert.strictEqual(err, null)
+        assert.strictEqual(data.event.name, 'ApiTest')
+
+        done()
+      }
+    )
+  })
+})
+
+describe('events api - get', () => {
+  it('same user id', done => {
+    client.users.events.get(user.id, { limit: 10 }, (err, data) => {
       assert.strictEqual(err, null)
-      assert.strictEqual(data.event.name, 'ApiTest')
+      assert.strictEqual(data.events[0].userId, user.id)
 
       done()
     })
@@ -59,11 +74,11 @@ describe('events api - create', () => {
 describe('events api - delete', () => {
   const events = []
 
-  before((done) => {
-    client.users.events.get(config.userId, { limit: 10 }, (err, data) => {
+  before(done => {
+    client.users.events.get(user.id, { limit: 10 }, (err, data) => {
       assert.strictEqual(err, null)
 
-      data.events.forEach((event) => {
+      data.events.forEach(event => {
         if (event.name === 'ApiTest') {
           events.push(event)
         }
@@ -73,8 +88,18 @@ describe('events api - delete', () => {
     })
   })
 
-  it('should delete without error', (done) => {
-    client.users.events.delete(config.userId, events[0].id, (err) => {
+  it('should delete without error', done => {
+    client.users.events.delete(user.id, events[0].id, err => {
+      assert.strictEqual(err, null)
+
+      done()
+    })
+  })
+})
+
+describe('users api - delete', () => {
+  it('should delete without error', done => {
+    client.users.delete(user.id, err => {
       assert.strictEqual(err, null)
 
       done()

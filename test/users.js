@@ -9,6 +9,7 @@ const config = require('../config.json')
 
 const client = new ChannelIO(config.accessKey, config.acesssSecret)
 
+const randomMemberId = 'test-user-' + (Math.floor(Math.random() * 9999) + 1000)
 const user = {
   id: null
 }
@@ -19,7 +20,7 @@ describe('users api - upsert', () => {
       testDate: Math.floor(new Date().getTime() / 1000)
     }
     client.users.update(
-      `@${config.memberId}`,
+      `@${randomMemberId}`,
       { profile: profile },
       (err, data) => {
         assert.strictEqual(err, null)
@@ -37,7 +38,7 @@ describe('users api - get', () => {
   it('same user id', done => {
     client.users.get(user.id, (err, data) => {
       assert.strictEqual(err, null)
-      assert.strictEqual(data.user.memberId, config.memberId)
+      assert.strictEqual(data.user.memberId, randomMemberId)
 
       done()
     })
